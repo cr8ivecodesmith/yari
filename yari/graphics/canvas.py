@@ -3,6 +3,10 @@ Canvas Node
 
 This is a node for drawing graphics.
 
+TODO:
+
+- Optimize name generator during adding of graphics objects.
+
 """
 
 __all__ = ('Canvas',)

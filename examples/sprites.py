@@ -16,7 +16,7 @@ images = (
 )
 canvas = Canvas(is_broadcasting=False)
 ww, wh = Window.size
-for _ in range(512):
+for _ in range(32):
     s = Sprite(
         source=choice(images),
         scale=.10,
@@ -28,25 +28,44 @@ for _ in range(512):
 yari.add_node(canvas)
 
 
-@yari.mainloop.listen('on_timeout')
-def update(node, delta):
-    print(f'FPS: {Clock.get_rfps()}')
-
+@kb.listen('on_key_down')
+def key_down(node, *args):
     ww, wh = Window.size
-
-    attr = choice(('x', 'y'))
-
-    for s in canvas.get_objects():
-        cur = getattr(s, attr)
-        setattr(s, attr, cur + randint(-100, 100) * delta)
-
-    if kb.is_key_down('r'):
-        for s in canvas.get_objects():
-            setattr(s, 'source', choice(images))
-            s.pos = (randint(0, ww), randint(0, wh))
-
+    if kb.is_key_down('1'):
+        for _ in range(32):
+            s = Sprite(
+                source=choice(images),
+                scale=.10,
+                pos=(randint(0, ww), randint(0, wh)),
+            )
+            canvas.add(s)
+    if kb.is_key_down('2'):
+        count = len(list(canvas.get_objects())) * 2
+        for _ in range(count):
+            s = Sprite(
+                source=choice(images),
+                scale=.10,
+                pos=(randint(0, ww), randint(0, wh)),
+            )
+            canvas.add(s)
+    if kb.is_key_down('3'):
+        for s in list(canvas.get_objects())[:]:
+            canvas.remove(s.name)
     if kb.is_key_down('escape'):
         kb.detach()
+        print('Press ESC again to exit.')
+
+
+@yari.mainloop.listen('on_timeout')
+def update(node, delta):
+    print(f'OBJECTS: {len(list(canvas.get_objects()))} @ {Clock.get_rfps()}')
+
+    if kb.is_key_down('p'):
+        ww, wh = Window.size
+        attr = choice(('x', 'y'))
+        for s in canvas.get_objects():
+            cur = getattr(s, attr)
+            setattr(s, attr, cur + randint(-100, 100) * delta)
 
 
 if __name__ == '__main__':
