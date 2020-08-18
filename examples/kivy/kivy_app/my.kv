@@ -1,0 +1,14 @@
+#:import Window kivy.core.window.Window
+#:import MyRoot main
+
+#:import KvLabel yari.ui.KvLabel
+
+<MyRoot>:
+    KvLabel:
+        id: label
+        text: 'Hello world!'
+        background_color: 1, .75, .23, 1
+        color: 0, 0, 0, 1
+        angle: 30
+        size: self.texture_size
+        pos: Window.width / 2 - self.width / 2, Window.height / 2

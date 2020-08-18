@@ -1,0 +1,11 @@
+*.py[cod]
+__pycache__
+*.swp
+*~
+*.log
+*.profile
+.DS_Store
+.python-version
+build/
+dist/
+*.egg-info/
