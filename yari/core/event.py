@@ -1,16 +1,18 @@
 """
 Core Event Manager
 
+NOTE:
+
+Must be inherited with a Kivy widget class.
+
 """
 
 __all__ = ('Event',)
 
 from collections import defaultdict
 
-from kivy.event import EventDispatcher
 
-
-class Event(EventDispatcher):
+class Event:
 
     def __init__(self, is_broadcasting=True, **kwargs):
         self.is_broadcasting = is_broadcasting
