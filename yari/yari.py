@@ -1,18 +1,15 @@
 """
 Main Yari App
 
-TODO:
-
-- Allow updating the mainloop delay
-- Hook up with Kivy config
-
 """
 
 __all__ = ('Yari', 'yari',)
 
 from kivy.app import App
+from kivy.config import Config
 from kivy.core.window import Window
 from kivy.lang import Builder
+from kivy.logger import Logger
 
 from yari.core import Root
 
@@ -42,7 +39,6 @@ class Yari(Root):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.window = Window
 
     def on_kv_post(self, base_widget):
         self.keyboard = self.ids.keyboard
@@ -60,6 +56,9 @@ class YariApp(App):
 
 
 yari.app = YariApp()
+yari.window = Window
+yari.config = Config
+yari.log = Logger
 
 
 yari.run = lambda: yari.app.run()
