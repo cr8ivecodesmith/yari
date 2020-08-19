@@ -26,6 +26,7 @@ class Timer(Node):
         self.bind(
             oneshot=self.handle_oneshot,
             autostart=self.start,
+            delay=self.handle_delay,
         )
 
         self._clock = None
@@ -39,10 +40,16 @@ class Timer(Node):
             Clock, 'schedule_once' if value else 'schedule_interval'
         )
 
+    def handle_delay(self, this, value):
+        self.stop()
+        self._clock = None
+        self.start()
+
     def start(self, *args):
         if self._clock and self._clock.is_triggered:
             return
         if not self._clock:
+            print(f'Clock starting with delay: {self.delay}')
             self._clock = self._scheduler(self._tick, self.delay)
         else:
             self._clock()
