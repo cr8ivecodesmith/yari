@@ -12,6 +12,8 @@ the event binding.
 
 __all__ = ('NodeBase',)
 
+from collections import defaultdict
+
 from kivy.properties import StringProperty
 from kivy.uix.widget import Widget
 
@@ -31,6 +33,7 @@ class NodeBase(Event, Widget):
 
     def __init__(self, **kwargs):
         self.nodes = {}
+        self._node_last_id = defaultdict(int)
 
         self.create_event('on_initialize')
         self.create_event('on_add_node')
@@ -52,11 +55,8 @@ class NodeBase(Event, Widget):
 
         if not node_id:
             name = node.__class__.__name__.lower()
-            count = len([
-                i for i in self.children
-                if getattr(i, 'node_id', '').startswith(name)
-            ])
-            node_id = f'{name}{count + 1}'
+            self._node_last_id[name] += 1
+            node_id = f'{name}{self._node_last_id[name]}'
             node.node_id = node_id
 
         self.nodes[node_id] = node

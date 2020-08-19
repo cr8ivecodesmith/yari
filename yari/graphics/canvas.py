@@ -3,13 +3,11 @@ Canvas Node
 
 This is a node for drawing graphics.
 
-TODO:
-
-- Optimize name generator during adding of graphics objects.
-
 """
 
 __all__ = ('Canvas',)
+
+from collections import defaultdict
 
 from yari.core import Node
 
@@ -23,6 +21,7 @@ class Canvas(Node):
         self.create_event('on_remove_object')
 
         self.objects = ({}, {}, {},)
+        self._obj_last_id = defaultdict(int)
 
     def get_layer(self, layer=1):
         assert (
@@ -60,8 +59,8 @@ class Canvas(Node):
 
         if not obj.name:
             cls_name = obj.__class__.__name__.lower()
-            count = len([i for i in objects if i.startswith(cls_name)])
-            obj._name = f'{cls_name}{count + 1}'
+            self._obj_last_id[cls_name] += 1
+            obj._name = f'{cls_name}{self._obj_last_id[cls_name]}'
 
         canvas.add(obj)
         objects[obj.name] = obj
