@@ -26,6 +26,10 @@ class PropDisable:
 
 class PropPos:
 
+    def __init__(self, **kwargs):
+        self._is_pos_int = False
+        super().__init__(**kwargs)
+
     @property
     def x(self): return self._shape.pos[0]
 
@@ -33,6 +37,7 @@ class PropPos:
     def x(self, v):
         if getattr(self, 'disabled', False):
             return
+        v = v if not self._is_pos_int else round(v)
         self.pos = (v, self._shape.pos[1])
 
     @property
@@ -42,6 +47,7 @@ class PropPos:
     def y(self, v):
         if getattr(self, 'disabled', False):
             return
+        v = v if not self._is_pos_int else round(v)
         self.pos = (self._shape.pos[0], v)
 
     @property
@@ -52,6 +58,7 @@ class PropPos:
         if getattr(self, 'disabled', False):
             return
 
+        v = v if not self._is_pos_int else (round(v[0]), round(v[1]))
         self._shape.pos = v
 
         # Update rotation origin if needed.
@@ -126,7 +133,8 @@ class PropColor:
     def alpha(self, v):
         if getattr(self, 'disabled', False):
             return
-        self._color.a = v
+        if 0. <= v <= 1.:
+            self._color.a = v
 
 
 class PropFlip:
