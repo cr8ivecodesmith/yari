@@ -10,6 +10,7 @@ __all__ = ('Canvas',)
 from collections import defaultdict
 
 from yari.core import Node
+from yari.graphics.graphicsobject import GraphicsObject
 
 
 class Canvas(Node):
@@ -49,21 +50,26 @@ class Canvas(Node):
     def add(self, obj, layer=1):
         canvas = self.get_layer(layer)
         objects = self.objects[layer]
+        obj_name = getattr(obj, '_name', '')
 
         assert (
-            obj.name not in objects
+            obj_name not in objects
         ), (
-            f'GraphicsObject name {obj.name} already exists in '
+            f'GraphicsObject name {obj_name} already exists in '
             f'layer {layer} of {self}.'
         )
 
-        if not obj.name:
+        if not obj_name:
             cls_name = obj.__class__.__name__.lower()
             self._obj_last_id[cls_name] += 1
-            obj._name = f'{cls_name}{self._obj_last_id[cls_name]}'
+            obj_name = f'{cls_name}{self._obj_last_id[cls_name]}'
 
         canvas.add(obj)
-        objects[obj.name] = obj
+
+        if isinstance(obj, GraphicsObject):
+            obj._name = obj_name
+            objects[obj_name] = obj
+
         self.broadcast('on_add_object', obj)
 
     def remove(self, obj_name, layer=1):
