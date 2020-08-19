@@ -57,4 +57,7 @@ class YariApp(App):
         return yari
 
 
-yari.run = lambda: YariApp().run()
+yari.app = YariApp()
+
+
+yari.run = lambda: yari.app.run()

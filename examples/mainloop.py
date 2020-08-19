@@ -4,13 +4,20 @@ from yari import yari
 from yari.ui import Label
 
 
+Window.size = (640, 480)
+yari.app.title = 'Main Loop'
+
+
 # Initialize nodes
 label = Label(
     text='Hello world!',
     background_color=(1, .75, .23, 1),
     color=(0, 0, 0, 1),
 )
-label.pos = (Window.width / 2 - label.width / 2, Window.height / 2)
+label.pos = (
+    Window.width / 2 - label.width / 2,
+    Window.height / 2 - label.height / 2,
+)
 
 
 # Compose nodes
