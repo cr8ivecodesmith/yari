@@ -1,11 +1,9 @@
-from kivy.core.window import Window
-
 from yari import yari
 from yari.ui import Label
 
 
-Window.size = (640, 480)
 yari.app.title = 'Main Loop'
+yari.window.size = (640, 480)
 
 
 # Initialize nodes
@@ -15,8 +13,8 @@ label = Label(
     color=(0, 0, 0, 1),
 )
 label.pos = (
-    Window.width / 2 - label.width / 2,
-    Window.height / 2 - label.height / 2,
+    yari.window.width / 2 - label.width / 2,
+    yari.window.height / 2 - label.height / 2,
 )
 
 

@@ -11,6 +11,7 @@ TODO:
 __all__ = ('Yari', 'yari',)
 
 from kivy.app import App
+from kivy.core.window import Window
 from kivy.lang import Builder
 
 from yari.core import Root
@@ -41,6 +42,7 @@ class Yari(Root):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.window = Window
 
     def on_kv_post(self, base_widget):
         self.keyboard = self.ids.keyboard

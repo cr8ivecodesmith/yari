@@ -1,7 +1,6 @@
 from random import randint, choice
 
 from kivy.clock import Clock
-from kivy.core.window import Window
 
 from yari import yari
 from yari.graphics import Canvas, Sprite
@@ -15,7 +14,7 @@ images = (
     'Mons 1.png', 'Mons 2.png', 'Mons 3.png', 'Mons 4.png',
 )
 canvas = Canvas(is_broadcasting=False)
-ww, wh = Window.size
+ww, wh = yari.window.size
 for _ in range(32):
     s = Sprite(
         source=choice(images),
@@ -30,7 +29,7 @@ yari.add_node(canvas)
 
 @kb.listen('on_key_down')
 def key_down(node, *args):
-    ww, wh = Window.size
+    ww, wh = yari.window.size
     if kb.is_key_down('1'):
         for _ in range(32):
             s = Sprite(
@@ -61,7 +60,7 @@ def update(node, delta):
     print(f'OBJECTS: {len(list(canvas.get_objects()))} @ {Clock.get_rfps()}')
 
     if kb.is_key_down('p'):
-        ww, wh = Window.size
+        ww, wh = yari.window.size
         attr = choice(('x', 'y'))
         for s in canvas.get_objects():
             cur = getattr(s, attr)
