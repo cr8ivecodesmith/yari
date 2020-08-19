@@ -3,6 +3,9 @@ Canvas Node
 
 This is a node for drawing graphics.
 
+TODO:
+- Verify freed RAM when removing canvas instructions.
+
 """
 
 __all__ = ('Canvas',)
