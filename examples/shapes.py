@@ -59,7 +59,11 @@ def key_down(node, *args):
 
 @yari.mainloop.listen('on_timeout')
 def update(node, delta):
-    print(f'OBJECTS: {len(list(canvas.get_objects()))} @ {Clock.get_rfps()}')
+    yari.log.info(
+        f'OBJECTS: {len(list(canvas.get_objects()))} '
+        f'({len(canvas.canvas.children)}) '
+        f'@ {Clock.get_rfps()} FPS'
+    )
 
     if kb.is_key_down('p'):
         ww, wh = Window.size
